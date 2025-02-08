@@ -1,120 +1,131 @@
-// src/Home.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Для навігації між сторінками
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import backgroundImage from "../assets/images/background.jpg";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Функція для відкриття модального вікна
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <div>
-      {/* Навігаційне меню */}
-      <nav className="bg-blue-500 text-white p-4">
-        <ul className="flex space-x-4">
+    <div className="bg-white text-black min-h-screen">
+      <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">Психологічні курси</h1>
+        <div className="md:hidden" onClick={toggleMenu}>
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </div>
+        <ul
+          className={`md:flex space-x-4 ${
+            isMenuOpen ? "block" : "hidden"
+          } md:block absolute md:static bg-blue-600 w-full md:w-auto left-0 top-16 md:top-0 p-4 md:p-0`}
+        >
           <li>
-            <Link to="/" className="hover:underline">
+            <Link to="/" className="hover:underline block md:inline">
               Головна
             </Link>
           </li>
           <li>
-            <Link to="/courses" className="hover:underline">
+            <Link to="/courses" className="hover:underline block md:inline">
               Курси
             </Link>
           </li>
           <li>
-            <Link to="/contact" className="hover:underline">
+            <Link to="/contact" className="hover:underline block md:inline">
               Зворотний зв'язок
             </Link>
           </li>
         </ul>
       </nav>
 
-      {/* Інформація про платформу */}
-      <section className="my-8 p-8 bg-gray-100 rounded-lg">
-        <h2 className="text-3xl font-bold mb-4">Про нашу платформу</h2>
-        <p>
-          Ми пропонуємо високоякісні онлайн курси з різних тем, що допоможуть
-          вам розвивати нові навички.
-        </p>
-      </section>
+      <header
+        className="text-center py-20 bg-cover bg-center text-white"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <div className="bg-black bg-opacity-50 p-6 rounded-lg inline-block">
+          <h1 className="text-4xl font-bold">
+            Платформа онлайн-курсів з психології
+          </h1>
+          <p className="mt-4 text-lg">
+            Навчайтеся в зручному темпі, отримуйте практичні навички та
+            рухайтеся до психологічного добробуту разом із нами!
+          </p>
+        </div>
+      </header>
 
-      {/* Перелік курсів */}
-      <section className="my-8 p-8">
-        <h2 className="text-3xl font-bold mb-4">Наші курси</h2>
-        <div className="grid grid-cols-2 gap-4">
+      <section className="p-8">
+        <h2 className="text-3xl font-bold mb-4">Категорії курсів</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link
-            to="/course1"
+            to="/beginner"
             className="block bg-orange-500 text-white text-center p-4 rounded-lg"
           >
-            Курс 1
+            Для початківців
           </Link>
           <Link
-            to="/course2"
+            to="/professionals"
             className="block bg-orange-500 text-white text-center p-4 rounded-lg"
           >
-            Курс 2
+            Для фахівців
           </Link>
           <Link
-            to="/course3"
+            to="/selfhelp"
             className="block bg-orange-500 text-white text-center p-4 rounded-lg"
           >
-            Курс 3
+            Для самодопомоги
           </Link>
           <Link
-            to="/course4"
+            to="/parents"
             className="block bg-orange-500 text-white text-center p-4 rounded-lg"
           >
-            Курс 4
-          </Link>
-          <Link
-            to="/course5"
-            className="block bg-orange-500 text-white text-center p-4 rounded-lg"
-          >
-            Курс 5
+            Для батьків
           </Link>
         </div>
       </section>
 
-      {/* Кнопка для відкриття модального вікна реєстрації */}
       <button
         onClick={openModal}
-        className="bg-blue-500 text-white p-2 rounded-lg"
+        className="bg-blue-600 text-white p-3 rounded-lg mt-4 mx-auto block"
       >
         Зареєструватися
       </button>
 
-      {/* Модальне вікно для реєстрації */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-8 rounded-lg w-96">
             <h3 className="text-2xl font-bold mb-4">Реєстрація</h3>
             <form>
-              <div className="mb-4">
-                <label className="block">Ім'я</label>
-                <input type="text" className="border p-2 w-full" />
-              </div>
-              <div className="mb-4">
-                <label className="block">Прізвище</label>
-                <input type="text" className="border p-2 w-full" />
-              </div>
-              <div className="mb-4">
-                <label className="block">Емейл</label>
-                <input type="email" className="border p-2 w-full" />
-              </div>
-              <div className="mb-4">
-                <label className="block">Телефон</label>
-                <input type="text" className="border p-2 w-full" />
-              </div>
-              <div className="mb-4">
-                <label className="block">Пароль</label>
-                <input type="password" className="border p-2 w-full" />
-              </div>
+              <input
+                type="text"
+                placeholder="Ім'я"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                placeholder="Прізвище"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="email"
+                placeholder="Емейл"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                placeholder="Телефон"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="password"
+                placeholder="Пароль"
+                className="border p-2 w-full mb-2"
+              />
               <button
                 type="submit"
-                className="bg-blue-500 text-white p-2 rounded-lg w-full"
+                className="bg-blue-600 text-white p-2 rounded-lg w-full"
               >
                 Зареєструватися
               </button>
