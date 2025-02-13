@@ -12,7 +12,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-[#333333] text-[#f4f4f4] min-h-screen">
+    <div className="bg-[#f4f4f4] text-[#333333] min-h-screen">
       <Header />
 
       {/* Головний екран з бекграундом */}
@@ -20,37 +20,41 @@ const Home = () => {
         className="h-screen flex flex-col justify-center items-center text-center bg-cover bg-center px-4"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="bg-black bg-opacity-50 p-8 rounded-lg">
-          <h1 className="text-5xl font-bold text-[#f4f4f4]">Баланс</h1>
-          <h2 className="text-2xl mt-2 text-[#f4f4f4]">
+        <div className="bg-black bg-opacity-50 p-10 rounded-lg shadow-lg max-w-lg mx-auto">
+          <h1 className="text-5xl font-extrabold text-[#f4f4f4] leading-tight">
+            Баланс
+          </h1>
+          <h2 className="text-xl mt-4 text-[#f4f4f4] opacity-75">
             Онлайн школа психології для всіх
           </h2>
         </div>
       </header>
 
       {/* Категорії курсів */}
-      <section className="p-8">
-        <h2 className="text-3xl font-bold text-center">Категорії курсів</h2>
-        <div className="mt-6 max-w-2xl mx-auto">
+      <section className="p-8 bg-[#ffffff]">
+        <h2 className="text-4xl font-semibold text-center text-[#333333]">
+          Категорії курсів
+        </h2>
+        <div className="mt-6 max-w-3xl mx-auto">
           {[
             "Для початківців",
             "Для фахівців",
             "Для самодопомоги",
             "Для батьків",
           ].map((category, index) => (
-            <div key={index} className="mb-4">
+            <div key={index} className="mb-6">
               <button
-                className="w-full text-left bg-orange-500 text-white p-4 rounded-lg font-bold"
+                className="w-full text-left bg-gradient-to-r from-[#f5a623] to-[#ff6a00] text-white p-5 rounded-xl font-bold shadow-md hover:scale-105 transition-transform"
                 onClick={() => toggleCategory(index)}
               >
                 {category}
               </button>
               {openCategory === index && (
-                <ul className="mt-2 bg-white text-black p-4 rounded-lg">
+                <ul className="mt-4 bg-white text-black p-4 rounded-lg shadow-md space-y-2">
                   <li>
                     <Link
                       to={`/courses/${index}/1`}
-                      className="block hover:underline"
+                      className="block text-[#f5a623] hover:underline transition-all"
                     >
                       Курс 1
                     </Link>
@@ -58,7 +62,7 @@ const Home = () => {
                   <li>
                     <Link
                       to={`/courses/${index}/2`}
-                      className="block hover:underline"
+                      className="block text-[#f5a623] hover:underline transition-all"
                     >
                       Курс 2
                     </Link>
@@ -66,7 +70,7 @@ const Home = () => {
                   <li>
                     <Link
                       to={`/courses/${index}/3`}
-                      className="block hover:underline"
+                      className="block text-[#f5a623] hover:underline transition-all"
                     >
                       Курс 3
                     </Link>
