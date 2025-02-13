@@ -1,141 +1,84 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import backgroundImage from "../assets/images/background.jpg";
 
 const Home = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleCategory = (index) => {
+    setOpenCategory(openCategory === index ? null : index);
+  };
 
   return (
-    <div className="bg-white text-black min-h-screen">
-      <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Психологічні курси</h1>
-        <div className="md:hidden" onClick={toggleMenu}>
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </div>
-        <ul
-          className={`md:flex space-x-4 ${
-            isMenuOpen ? "block" : "hidden"
-          } md:block absolute md:static bg-blue-600 w-full md:w-auto left-0 top-16 md:top-0 p-4 md:p-0`}
-        >
-          <li>
-            <Link to="/" className="hover:underline block md:inline">
-              Головна
-            </Link>
-          </li>
-          <li>
-            <Link to="/courses" className="hover:underline block md:inline">
-              Курси
-            </Link>
-          </li>
-          <li>
-            <Link to="/contact" className="hover:underline block md:inline">
-              Зворотний зв'язок
-            </Link>
-          </li>
-        </ul>
-      </nav>
+    <div className="bg-[#333333] text-[#f4f4f4] min-h-screen">
+      <Header />
 
+      {/* Головний екран з бекграундом */}
       <header
-        className="text-center py-20 bg-cover bg-center text-white"
+        className="h-screen flex flex-col justify-center items-center text-center bg-cover bg-center px-4"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
-        <div className="bg-black bg-opacity-50 p-6 rounded-lg inline-block">
-          <h1 className="text-4xl font-bold">
-            Платформа онлайн-курсів з психології
-          </h1>
-          <p className="mt-4 text-lg">
-            Навчайтеся в зручному темпі, отримуйте практичні навички та
-            рухайтеся до психологічного добробуту разом із нами!
-          </p>
+        <div className="bg-black bg-opacity-50 p-8 rounded-lg">
+          <h1 className="text-5xl font-bold text-[#f4f4f4]">Баланс</h1>
+          <h2 className="text-2xl mt-2 text-[#f4f4f4]">
+            Онлайн школа психології для всіх
+          </h2>
         </div>
       </header>
 
+      {/* Категорії курсів */}
       <section className="p-8">
-        <h2 className="text-3xl font-bold mb-4">Категорії курсів</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link
-            to="/beginner"
-            className="block bg-orange-500 text-white text-center p-4 rounded-lg"
-          >
-            Для початківців
-          </Link>
-          <Link
-            to="/professionals"
-            className="block bg-orange-500 text-white text-center p-4 rounded-lg"
-          >
-            Для фахівців
-          </Link>
-          <Link
-            to="/selfhelp"
-            className="block bg-orange-500 text-white text-center p-4 rounded-lg"
-          >
-            Для самодопомоги
-          </Link>
-          <Link
-            to="/parents"
-            className="block bg-orange-500 text-white text-center p-4 rounded-lg"
-          >
-            Для батьків
-          </Link>
+        <h2 className="text-3xl font-bold text-center">Категорії курсів</h2>
+        <div className="mt-6 max-w-2xl mx-auto">
+          {[
+            "Для початківців",
+            "Для фахівців",
+            "Для самодопомоги",
+            "Для батьків",
+          ].map((category, index) => (
+            <div key={index} className="mb-4">
+              <button
+                className="w-full text-left bg-orange-500 text-white p-4 rounded-lg font-bold"
+                onClick={() => toggleCategory(index)}
+              >
+                {category}
+              </button>
+              {openCategory === index && (
+                <ul className="mt-2 bg-white text-black p-4 rounded-lg">
+                  <li>
+                    <Link
+                      to={`/courses/${index}/1`}
+                      className="block hover:underline"
+                    >
+                      Курс 1
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/courses/${index}/2`}
+                      className="block hover:underline"
+                    >
+                      Курс 2
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/courses/${index}/3`}
+                      className="block hover:underline"
+                    >
+                      Курс 3
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
-      <button
-        onClick={openModal}
-        className="bg-blue-600 text-white p-3 rounded-lg mt-4 mx-auto block"
-      >
-        Зареєструватися
-      </button>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg w-96">
-            <h3 className="text-2xl font-bold mb-4">Реєстрація</h3>
-            <form>
-              <input
-                type="text"
-                placeholder="Ім'я"
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="text"
-                placeholder="Прізвище"
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="email"
-                placeholder="Емейл"
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="text"
-                placeholder="Телефон"
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="password"
-                placeholder="Пароль"
-                className="border p-2 w-full mb-2"
-              />
-              <button
-                type="submit"
-                className="bg-blue-600 text-white p-2 rounded-lg w-full"
-              >
-                Зареєструватися
-              </button>
-            </form>
-            <button onClick={closeModal} className="mt-4 text-red-500">
-              Закрити
-            </button>
-          </div>
-        </div>
-      )}
+      <Footer />
     </div>
   );
 };
